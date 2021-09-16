@@ -1,0 +1,19 @@
+[package]
+name = "everust"
+version = "0.1.0"
+authors = ["oliverdding <oliverdding@outlook.com>"]
+edition = "2021"
+description = "codewars's solutions in rust"
+readme = "https://github.com/oliverdding/everust/blob/main/README.md"
+homepage = "https://github.com/oliverdding/everust"
+repository = "https://github.com/oliverdding/everust.git"
+license-file = "LICENSE"
+keywords = ["algorithms", "datastructure"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+
+
+[dev-dependencies]
+rand = '*'
