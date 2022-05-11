@@ -1,10 +1,12 @@
 mod bubble_sort;
 mod insertion_sort;
+mod merge_sort;
 mod quick_sort;
 mod selection_sort;
 
 pub use bubble_sort::sort as bubble_sort;
 pub use insertion_sort::sort as insertion_sort;
+pub use merge_sort::sort as merge_sort;
 pub use quick_sort::sort as quick_sort;
 pub use selection_sort::sort as selection_sort;
 

@@ -1,55 +1,42 @@
-pub fn sort<T: Ord>(arr: &mut [T]) {
+pub fn sort<T: Ord + Copy>(arr: &mut [T]) {
     if arr.len() > 1 {
-        quick_sort(arr, 0, arr.len() - 1);
+        let mid = arr.len() / 2;
+        sort(&mut arr[..mid]);
+        sort(&mut arr[mid..]);
+        merge(&mut arr[..], mid)
     }
 }
 
-fn quick_sort<T: Ord>(arr: &mut [T], lo: usize, hi: usize) {
-    if lo <= hi {
-        let pivot = partition(arr, lo, hi);
-        if lo < pivot {
-            quick_sort(arr, lo, pivot - 1);
-        }
-        if pivot < hi {
-            quick_sort(arr, pivot + 1, hi);
-        }
+fn merge<T: Ord + Copy>(arr: &mut [T], mid: usize) {
+    let arr1 = arr[..mid].to_vec();
+    let mut idx1: usize = 0;
+    let arr2 = arr[mid..].to_vec();
+    let mut idx2: usize = 0;
+
+    let mut i = 0;
+    let size = arr.len() - mid;
+    while idx1 < mid && idx2 < size {
+        // copy smaller element to arr
+        arr[i] = if arr1[idx1] <= arr2[idx2] {
+            idx1 += 1;
+            arr1[idx1 - 1]
+        } else {
+            idx2 += 1;
+            arr2[idx2 - 1]
+        };
+        i += 1;
     }
-}
-
-fn partition<T: Ord>(arr: &mut [T], lo: usize, hi: usize) -> usize {
-    let mut i = lo;
-
-    for j in lo..hi {
-        if arr[j] < arr[hi] {
-            // everything element less than arr[hi] would be swap behind `i`
-            arr.swap(i, j);
-            i += 1;
-        }
-    }
-
-    arr.swap(i as usize, hi as usize);
-    i
+    arr[i..].clone_from_slice(if idx1 < mid {
+        // copy the left element to current arr
+        &arr1[idx1..]
+    } else {
+        &arr2[idx2..]
+    })
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn test_partition_single_value() {
-        let mut ve1 = vec![12];
-
-        assert_eq!(partition(&mut ve1, 0, 0), 0);
-
-        assert_eq!(ve1, vec![12]);
-    }
-
-    #[test]
-    fn test_partition_single_normal() {
-        let mut ve1 = vec![4, 3, 2, 5, 1];
-
-        assert_eq!(partition(&mut ve1, 0, 4), 0);
-    }
 
     #[test]
     fn empty() {

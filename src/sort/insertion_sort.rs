@@ -1,5 +1,5 @@
 pub fn sort<T: Ord>(arr: &mut [T]) {
-    (1..arr.len()).for_each(|i|{
+    (1..arr.len()).for_each(|i| {
         let p = arr[0..i].binary_search(&arr[i]).unwrap_or_else(|x| x);
         (p + 1..=i).rev().for_each(|j| arr.swap(j, j - 1));
     })
