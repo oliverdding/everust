@@ -44,6 +44,12 @@ mod tests {
     }
 
     #[test]
+    fn one_repeat() {
+        let res = search(&vec![1, 1, 1], &1);
+        assert_eq!(res, Ok(2));
+    }
+
+    #[test]
     fn repeat() {
         let res = search(&vec![1, 1, 1, 2, 3, 4, 4, 4, 6, 6], &1);
         assert_eq!(res, Ok(2));
