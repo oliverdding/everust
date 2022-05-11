@@ -1,18 +1,24 @@
 use std::cmp::Ordering;
 
 pub fn search<T: Ord>(arr: &[T], target: &T) -> Result<usize, usize> {
+    if arr.is_empty() {
+        return Err(0);
+    }
     let size = arr.len();
     let mut left = 0;
     let mut right = size;
     while left < right {
         let mid = left + (right - left) / 2;
         match target.cmp(&arr[mid]) {
-            Ordering::Less => right = mid,
-            Ordering::Equal => return Ok(mid),
+            Ordering::Less | Ordering::Equal => right = mid,
             Ordering::Greater => left = mid + 1,
         };
     }
-    Err(left)
+    if right == size || !target.eq(&arr[right]) {
+        Err(left)
+    } else {
+        Ok(right)
+    }
 }
 
 #[cfg(test)]
@@ -40,11 +46,11 @@ mod tests {
     #[test]
     fn repeat() {
         let res = search(&vec![1, 1, 1, 2, 3, 4, 4, 4, 6, 6], &1);
-        assert!(res.is_ok());
+        assert_eq!(res, Ok(0));
         let res = search(&vec![1, 1, 1, 2, 3, 4, 4, 4, 6, 6], &4);
-        assert!(res.is_ok());
+        assert_eq!(res, Ok(5));
         let res = search(&vec![1, 1, 1, 2, 3, 4, 4, 4, 6, 6], &6);
-        assert!(res.is_ok());
+        assert_eq!(res, Ok(8));
     }
 
     #[test]
