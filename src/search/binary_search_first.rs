@@ -1,12 +1,8 @@
 use std::cmp::Ordering;
 
 pub fn search<T: Ord>(arr: &[T], target: &T) -> Result<usize, usize> {
-    if arr.is_empty() {
-        return Err(0);
-    }
-    let size = arr.len();
     let mut left = 0;
-    let mut right = size;
+    let mut right = arr.len();
     while left < right {
         let mid = left + (right - left) / 2;
         match target.cmp(&arr[mid]) {
@@ -14,10 +10,10 @@ pub fn search<T: Ord>(arr: &[T], target: &T) -> Result<usize, usize> {
             Ordering::Greater => left = mid + 1,
         };
     }
-    if right == size || !target.eq(&arr[right]) {
-        Err(left)
-    } else {
+    if right != arr.len() && target.eq(&arr[right]) {
         Ok(right)
+    } else {
+        Err(left)
     }
 }
 
