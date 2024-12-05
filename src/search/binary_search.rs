@@ -20,53 +20,53 @@ mod tests {
 
     #[test]
     fn empty() {
-        let res = search(&vec![], &"a");
+        let res = search(&[], &"a");
         assert_eq!(res, Err(0));
     }
 
     #[test]
     fn one() {
-        let res = search(&vec!["a"], &"a");
+        let res = search(&["a"], &"a");
         assert_eq!(res, Ok(0));
     }
 
     #[test]
     fn string_array() {
-        let res = search(&vec!["a", "b", "c", "d", "e", "f"], &"d");
+        let res = search(&["a", "b", "c", "d", "e", "f"], &"d");
         assert_eq!(res, Ok(3));
     }
 
     #[test]
     fn repeat() {
-        let res = search(&vec![1, 1, 1, 2, 3, 4, 4, 4, 6, 6], &1);
+        let res = search(&[1, 1, 1, 2, 3, 4, 4, 4, 6, 6], &1);
         assert!(res.is_ok());
-        let res = search(&vec![1, 1, 1, 2, 3, 4, 4, 4, 6, 6], &4);
+        let res = search(&[1, 1, 1, 2, 3, 4, 4, 4, 6, 6], &4);
         assert!(res.is_ok());
-        let res = search(&vec![1, 1, 1, 2, 3, 4, 4, 4, 6, 6], &6);
+        let res = search(&[1, 1, 1, 2, 3, 4, 4, 4, 6, 6], &6);
         assert!(res.is_ok());
     }
 
     #[test]
     fn int_array() {
-        let res = search(&vec![1, 2, 3, 4], &4);
+        let res = search(&[1, 2, 3, 4], &4);
         assert_eq!(res, Ok(3));
 
-        let res = search(&vec![1, 2, 3, 4], &3);
+        let res = search(&[1, 2, 3, 4], &3);
         assert_eq!(res, Ok(2));
 
-        let res = search(&vec![1, 2, 3, 4], &2);
+        let res = search(&[1, 2, 3, 4], &2);
         assert_eq!(res, Ok(1));
 
-        let res = search(&vec![1, 2, 3, 4], &1);
+        let res = search(&[1, 2, 3, 4], &1);
         assert_eq!(res, Ok(0));
     }
 
     #[test]
     fn not_found() {
-        let res = search(&vec![1, 2, 3, 4], &5);
+        let res = search(&[1, 2, 3, 4], &5);
         assert_eq!(res, Err(4));
 
-        let res = search(&vec![1, 2, 3, 4], &0);
+        let res = search(&[1, 2, 3, 4], &0);
         assert_eq!(res, Err(0));
     }
 }
