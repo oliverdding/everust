@@ -2,13 +2,13 @@ use std::cmp::Ordering;
 
 pub fn search<T: Ord>(arr: &[T], target: &T) -> Result<usize, usize> {
     let mut left = 0;
-    let mut right = arr.len();
-    while left < right {
+    let mut right = arr.len().checked_sub(1).ok_or(usize::MIN)?;
+    while left <= right {
         let mid = left + (right - left) / 2;
         match target.cmp(&arr[mid]) {
-            Ordering::Less => right = mid,
+            Ordering::Less => right = mid.checked_sub(1).ok_or(usize::MIN)?,
             Ordering::Equal => return Ok(mid),
-            Ordering::Greater => left = mid + 1,
+            Ordering::Greater => left = mid.checked_add(1).ok_or(usize::MAX)?,
         };
     }
     Err(left)
