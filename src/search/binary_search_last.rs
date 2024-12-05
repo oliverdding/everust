@@ -7,11 +7,17 @@ pub fn search<T: Ord>(arr: &[T], target: &T) -> Result<usize, usize> {
         let mid = left + (right - left) / 2;
         match target.cmp(&arr[mid]) {
             Ordering::Less => right = mid,
-            Ordering::Greater | Ordering::Equal => left = mid + 1,
+            Ordering::Equal => {
+                left = match mid.checked_add(1) {
+                    Some(x) => x,
+                    None => break,
+                }
+            }
+            Ordering::Greater => left = mid.checked_add(1).ok_or(usize::MAX)?,
         };
     }
-    if right != 0 && target.eq(&arr[right - 1]) {
-        Ok(right - 1)
+    if left != 0 && target.eq(&arr[left - 1]) {
+        Ok(left - 1)
     } else {
         Err(left)
     }
