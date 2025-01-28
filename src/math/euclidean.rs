@@ -9,7 +9,7 @@ pub fn gcd(a: u64, b: u64) -> u64 {
 
     let (max, min) = (cmp::max(a, b), cmp::min(a, b));
 
-    gcd(max - min, min)
+    gcd(max % min, min)
 }
 
 #[cfg(test)]
