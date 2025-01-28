@@ -45,6 +45,13 @@ mod tests {
     }
 
     #[bench]
+    fn bench_vec_quick_sort(b: &mut Bencher) {
+        let mut arr = (START..=END).collect::<Vec<u32>>();
+        arr.shuffle(&mut thread_rng());
+        b.iter(|| arr.clone().sort());
+    }
+
+    #[bench]
     fn bench_selection_sort(b: &mut Bencher) {
         let mut arr = (START..=END).collect::<Vec<u32>>();
         arr.shuffle(&mut thread_rng());

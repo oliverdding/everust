@@ -1,12 +1,12 @@
 pub fn sort<T: Ord>(arr: &mut [T]) {
-    (0..arr.len()).for_each(|i|
-        (0..arr.len() - 1 - i).for_each(|j|
-            if arr[j] > arr[j + 1] {
-                arr.swap(j, j + 1);
-            }
-        )
-    );
-}
+    for i in 0..arr.len() {
+      for j in 0..arr.len() - i - 1 {
+        if arr[j + 1] < arr[j] {
+          arr.swap(j, j + 1);
+        }
+      }
+    }
+  }
 
 #[cfg(test)]
 mod tests {

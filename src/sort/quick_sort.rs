@@ -5,7 +5,7 @@ pub fn sort<T: Ord>(arr: &mut [T]) {
 }
 
 fn quick_sort<T: Ord>(arr: &mut [T], lo: usize, hi: usize) {
-    if lo <= hi {
+    if lo < hi {
         let pivot = partition(arr, lo, hi);
         if lo < pivot {
             quick_sort(arr, lo, pivot - 1);
@@ -17,7 +17,7 @@ fn quick_sort<T: Ord>(arr: &mut [T], lo: usize, hi: usize) {
 }
 
 fn partition<T: Ord>(arr: &mut [T], lo: usize, hi: usize) -> usize {
-    let mut i = lo;
+    let mut i = lo; // index of smaller element (not included)
 
     for j in lo..hi {
         if arr[j] < arr[hi] {
@@ -27,7 +27,7 @@ fn partition<T: Ord>(arr: &mut [T], lo: usize, hi: usize) -> usize {
         }
     }
 
-    arr.swap(i as usize, hi as usize);
+    arr.swap(i, hi);
     i
 }
 
