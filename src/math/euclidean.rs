@@ -1,15 +1,9 @@
-use std::cmp;
-
 pub fn gcd(a: u64, b: u64) -> u64 {
-    if a == 0 {
-        return b;
-    } else if b == 0 {
+    if b == 0 {
         return a;
     }
 
-    let (max, min) = (cmp::max(a, b), cmp::min(a, b));
-
-    gcd(max % min, min)
+    gcd(b, a%b)
 }
 
 #[cfg(test)]
